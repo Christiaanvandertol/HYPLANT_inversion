@@ -1,0 +1,20 @@
+﻿tune,variable,value,lower,upper,uncertainty,description,units
+1,BSMBrightness,0.4,0,0.9,0.3,soil brightness,-
+1,BSMlat,30,20,50,10,BSM model parameter lat,-
+1,BSMlon,50,40,70,10,BSM model parameter lon,-
+1,SMC,0.2,0.18,0.55,0.1,volumetric soil moisture content,%
+1,Cab,30,0,120,40,leaf chlorophyll content,ug cm-2
+1,Cca,10,0,60,20,leaf carotenoid content,ug cm-2
+1,Cant,2,0,5,1.666666667,leaf anthocyanin content,ug cm-2
+1,Cdm,0.002,0,0.02,0.006666667,leaf mass per area (dry matter),g cm-2
+1,Cw,0.002,0,0.2,0.066666667,equivalent leaf water thickness,cm
+1,Cs,0.1,0,1.2,0.4,senescent material (brown pigments),-
+0,Cx,0,-5,5,3.333333333,de-epoxydation state,
+1,N,1.5,0.8,3.5,0.9,mesophyll structure parameter,-
+1,LAI,3,0,7,2.333333333,canopy leaf area index,m2 m-2
+1,LIDFa,-0.35,-1,1,0.666666667,leaf inclination distribution function parameters a,-
+1,LIDFb,-0.15,-1,1,0.666666667,leaf inclination distribution function parameters b,-
+1,SIF_PC1,1,0,40,1.00E+09,sun induced fluorescence (fit only),
+1,SIF_PC2,1,-20,20,1.00E+09,sun induced fluorescence (fit only),
+1,SIF_PC3,1,-10,10,1.00E+09,sun induced fluorescence (fit only),
+1,SIF_PC4,1,-2,2,1.00E+09,sun induced fluorescence (fit only),

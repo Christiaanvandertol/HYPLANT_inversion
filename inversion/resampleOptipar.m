@@ -1,0 +1,21 @@
+function optiparout         = resampleOptipar(optipar,wlout)
+
+wl = optipar.wl;
+optiparout.wl = wlout;
+optiparout.nr = interp1(wl,optipar.nr,wlout);
+optiparout.nw = interp1(wl,optipar.nw,wlout);
+optiparout.Kab = interp1(wl,optipar.Kab,wlout);
+optiparout.Kca = interp1(wl,optipar.Kca,wlout);
+optiparout.Ks = interp1(wl,optipar.Ks,wlout);
+optiparout.Kw = interp1(wl,optipar.Kw,wlout);
+optiparout.Kdm = interp1(wl,optipar.Kdm,wlout);
+optiparout.phiI = interp1(wl,optipar.phiI,wlout);
+optiparout.phiII = interp1(wl,optipar.phiII,wlout);
+optiparout.KcaV = interp1(wl,optipar.KcaV,wlout);
+optiparout.KcaZ = interp1(wl,optipar.KcaZ,wlout);
+optiparout.Kant = interp1(wl,optipar.Kant,wlout);
+optiparout.phi = interp1(wl,optipar.phi,wlout);
+optiparout.GSV = interp1(wl,optipar.GSV,wlout);
+optiparout.Kp = interp1(wl,optipar.Kp,wlout);
+optiparout.Kcbc = interp1(wl,optipar.Kcbc,wlout);
+optiparout.phiE = interp1(wl,optipar.phiE,wlout);

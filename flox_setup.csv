@@ -1,0 +1,9 @@
+FLOX_ID,1,Name,any_other_info
+lat,43.0, latitude, degrees
+lon,11.0, longitude, degrees
+timezone,0, timezone, hours east of UTC
+vza,0.0, viewing zenith angle, degrees
+vaa,0.0, viewing azimuth angle (this is only relevant if vza is not zero), degrees
+fwhmfull,1.0, full with half max of the broadband spectrometer, nm
+wlmin,410, lowest wavelength for the inversion (i.e. spectral range for fitting), nm
+wlmax,850, higest wavelength for the inversion (i.e. spectral range for fitting), nm

@@ -1,0 +1,27 @@
+function [refl, soil_refl, fluo] = rtmo2measured_refl(rad, SIF, soil_refl, wlP, irr_meas, measurement, Rin)    
+    
+    method = 'spline';  % M2020a name
+    if verLessThan('matlab', '9.8')
+        method = 'splines';
+    end
+
+    % we assume reflectance factors are smooth enough to be interpolated without errors
+    rso     = interp1(wlP, rad.rso, measurement.wl, method, 1E-4);
+    rdo     = interp1(wlP, rad.rdo, measurement.wl, method, 1E-4);
+    rdd     = interp1(wlP, rad.rdd, measurement.wl, method, 1E-4);
+    rsd     = interp1(wlP, rad.rsd, measurement.wl, method, 1E-4);
+    SIFs    = interp1(wlP, SIF, measurement.wl, method, 1E-4);
+
+    [Esun_, Esky_, Eint] = equations.transmittances2irradiance(irr_meas, rdd, rsd, Rin);
+
+    piL_    = rso .* Esun_ + rdo .* Esky_ + SIFs;
+    E_tot = Esun_ + Esky_;
+    refl    = piL_./ E_tot;
+    
+    soil_refl  = interp1(wlP, soil_refl, measurement.wl, method, 1E-4);
+    
+    %% fluorescence in measurement wl
+    fluo.SIF = SIFs(measurement.i_sif);
+    fluo.SIFnorm = SIFs(measurement.i_sif) / Eint;
+    
+end
