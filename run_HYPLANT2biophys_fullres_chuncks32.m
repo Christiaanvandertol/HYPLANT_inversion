@@ -99,7 +99,7 @@ pcf             = PCflu(2:end, 2:5);
 %%
 measurement.Ein = Ein;
 %%
-p = NaN*ones(size(refl,2),18);
+p = NaN*ones(size(refl,2),18*2+1);
 I = find(refl(100,:) > 0);
 %I = I(1:100);
 n = numel(I);
@@ -115,10 +115,10 @@ parfor c = 1:nChunks
         columns = I(positions);
 
         reflc = refl(:,columns);
-        pLocal = NaN(numel(columns),18);
+        pLocal = NaN(numel(columns),18*2+1);
 
         for j = 1:numel(columns)
-            [~, paramsout] = fit_spectra( ...
+            [paramsout] = fit_spectra( ...
                 reflc(:,j), Ein, tab, angles, spectral, ...
                 optipar, pcf, atmo, meteo, constants, method);
 
@@ -169,20 +169,20 @@ writematrix(d, 'HyPlant_SCOPE_input5.csv', 'WriteMode', 'append');
 %L2valdata = FLOX2biophys(path_FLOX,path_specfit,1);
 
 %%
-figure(1), clf
-s = [5,6,7,12,13,14];
-for k = 1:length(s)
-    subplot(2,3,k)
-    dummy = (x(:,s(k)));
-    dummy = reshape(dummy,[718,455]);
-    im = imagesc(dummy);
-        set(gca, 'xlim',[50,100], 'ylim',[0,250])
-
-    %axis image off
-    set(im, 'AlphaData', ~isnan(dummy))
-
-    colorbar
-    title(h(s(k)+1))
-end
-
+% figure(1), clf
+% s = [5,6,7,12,13,14];
+% for k = 1:length(s)
+%     subplot(2,3,k)
+%     dummy = (x(:,s(k)));
+%     dummy = reshape(dummy,[718,455]);
+%     im = imagesc(dummy);
+%         set(gca, 'xlim',[50,100], 'ylim',[0,250])
+% 
+%     %axis image off
+%     set(im, 'AlphaData', ~isnan(dummy))
+% 
+%     colorbar
+%     title(h(s(k)+1))
+% end
+% 
     

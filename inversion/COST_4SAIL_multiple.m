@@ -34,6 +34,7 @@ leafbio.Cp   = 1;
 leafbio.fqe  = 0.01;
 
 leafopt = fluspect_mSCOPE(mly,spectral,leafbio,optipar, nl);
+%leafopt = fluspect_B_CX(spectral,leafbio,optipar);
 %leafopt.refl(:, spectral.IwlT) = 0.01;
 %leafopt.tran(:, spectral.IwlT) = 0.01;
 

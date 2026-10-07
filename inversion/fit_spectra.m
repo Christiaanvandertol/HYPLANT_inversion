@@ -1,4 +1,4 @@
-function [results,paramsout] = fit_spectra(r,E, tab, angles, ...
+function [paramsout] = fit_spectra(r,E, tab, angles, ...
     spectral, optipar, pcf, atmo, meteo, constants, method)
 
 if ~exist('lsqnonlin') %#ok<EXIST>
@@ -29,9 +29,9 @@ if any(tab.include)  % analogy of any(include == 1)
     tic
     [paramsout,Resnorm,FVAL,exitflag,output,~,J]= lsqnonlin(f, params0, lb, ub, opt); %#ok<ASGLU>
     toc
-    if exitflag<1
-        paramsout = NaN*paramsout; 
-    end
+%    if exitflag<1
+%        paramsout = NaN*paramsout; 
+%    end
 else % skip minimization and get resuls of RTMo_lite run with initial  parameters (param0)
     paramsout = params0;
 end
@@ -47,43 +47,45 @@ stdPar0 = inv(Js'*Js)*Js'*sigmarefl(:); %#ok<MINV>s
 stdPar1 = sqrt(diag(full(xCov)));
 stdPar = sqrt(stdPar0.^2 + stdPar1.^2);
 
-%% best-fitting parameters
-results = struct();
-tab.value(tab.include) = paramsout;
-
-%results.parameters = demodify_parameters(tab.value, tab.variable);
-
-%% best-fitting spectra
-f = @(params)COST_4SAIL_multiple(params, 0, r,E, tab, angles, ...
-    spectral, optipar, pcf, atmo, meteo, constants,1,stdPar,method);
-
-[~, RSCOPE, L2C,FSCOPE,er] = f(paramsout); %#ok<ASGLU>
-J2 = numericalJacobian(f,paramsout);
-
-varDiagnostic       = J2*xCov*J2';
-stdDiagnostic       = sqrt(diag(varDiagnostic));
-%results.rad = rad;
-L2C.fSunlit_unc       = stdDiagnostic(1);
-L2C.fSunlit_aPARchl_unc  = stdDiagnostic(2);
-L2C.fAPAR_unc       = stdDiagnostic(3);
-L2C.fAPARchl_unc    = stdDiagnostic(4);
-L2C.APARchl_unc     = stdDiagnostic(4)*L2C.iPAR; %currently not considering the uncertainty in iPAR 
-%if isfield(measurement,'sif')
-%    L2C.FQE_unc         = sqrt(L2C.FQE_unc.^2 + stdDiagnostic(3).^2);
-%end
-%L2C.sigmaF_unc      = stdDiagnostic(4+isfield(measurement,'sif'):end);
-
-results.L2biophys         = L2C;
-results.FSCOPE      = FSCOPE;
-results.RSCOPE      = RSCOPE;
-
-% obsolete outputs
-%results.residual    = sqrt(er'*er);
-%results.Jacobian    = J;
-% results.rmse = rmse;
-% results.refl_mod = reflSAIL;
-% results.sif = fluo.SIF;
-% results.sif_norm = fluo.SIFnorm;
-% results.soil_mod = soil.refl_in_meas;
-% results.exitflag = exitflag;
+paramsout = [paramsout;stdPar; exitflag];
+% %% best-fitting parameters
+% results = struct();
+% tab.value(tab.include) = paramsout;
+% 
+% %results.parameters = demodify_parameters(tab.value, tab.variable);
+% 
+% %% best-fitting spectra
+% f = @(params)COST_4SAIL_multiple(params, 0, r,E, tab, angles, ...
+%     spectral, optipar, pcf, atmo, meteo, constants,1,stdPar,method);
+% 
+% [~, RSCOPE, L2C,FSCOPE,er] = f(paramsout); %#ok<ASGLU>
+% J2 = numericalJacobian(f,paramsout);
+% 
+% varDiagnostic       = J2*xCov*J2';
+% stdDiagnostic       = sqrt(diag(varDiagnostic));
+% %results.rad = rad;
+% L2C.fSunlit_unc       = stdDiagnostic(1);
+% L2C.fSunlit_aPARchl_unc  = stdDiagnostic(2);
+% L2C.fAPAR_unc       = stdDiagnostic(3);
+% L2C.fAPARchl_unc    = stdDiagnostic(4);
+% L2C.APARchl_unc     = stdDiagnostic(4)*L2C.iPAR; %currently not considering the uncertainty in iPAR 
+% %if isfield(measurement,'sif')
+% %    L2C.FQE_unc         = sqrt(L2C.FQE_unc.^2 + stdDiagnostic(3).^2);
+% %end
+% %L2C.sigmaF_unc      = stdDiagnostic(4+isfield(measurement,'sif'):end);
+% 
+% results.L2biophys         = L2C;
+% results.FSCOPE      = FSCOPE;
+% results.RSCOPE      = RSCOPE;
+% results.exitflag    = exitflag;
+% 
+% % obsolete outputs
+% %results.residual    = sqrt(er'*er);
+% %results.Jacobian    = J;
+% % results.rmse = rmse;
+% % results.refl_mod = reflSAIL;
+% % results.sif = fluo.SIF;
+% % results.sif_norm = fluo.SIFnorm;
+% % results.soil_mod = soil.refl_in_meas;
+% % results.exitflag = exitflag;
 end
