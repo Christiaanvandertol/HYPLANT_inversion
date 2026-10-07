@@ -100,21 +100,12 @@ pcf             = PCflu(2:end, 2:5);
 measurement.Ein = Ein;
 %%
 p = NaN*ones(size(refl,2),18);
-
-%for k = I(5000:10000)%size(refl,2)
-%for k = I(9900:10000)%size(refl,2)
-diary log_file.txt
-
 I = find(refl(100,:) > 0);
-
-I = I(1:100);
+%I = I(1:100);
 n = numel(I);
-%p = NaN(size(refl,2),18);
 
-%pi = NaN*ones(length(I),18);
 nChunks = 32;
 L = ceil(n/nChunks);
-
 parfor c = 1:nChunks
     first = 1 + L*(c-1);
     last  = min(n, L*c);

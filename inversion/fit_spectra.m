@@ -29,6 +29,9 @@ if any(tab.include)  % analogy of any(include == 1)
     tic
     [paramsout,Resnorm,FVAL,exitflag,output,~,J]= lsqnonlin(f, params0, lb, ub, opt); %#ok<ASGLU>
     toc
+    if exitflag<1
+        paramsout = NaN*paramsout; 
+    end
 else % skip minimization and get resuls of RTMo_lite run with initial  parameters (param0)
     paramsout = params0;
 end
