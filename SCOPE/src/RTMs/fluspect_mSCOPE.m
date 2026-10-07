@@ -3,6 +3,8 @@ function [leafopt]=fluspect_mSCOPE(mly,spectral,leafbio,optipar, nl)
         % for 60 sublayers
         indStar =[1,floor(cumsum(mly.pLAI/sum(mly.pLAI))*nl)];  % index of starting for each different layer
         for i=1:mly.nly
+            if length(mly.pCab)<1, 'noCab', end
+            if i>1, 'i>1', end
             leafbio.Cab     =   mly.pCab(i);
             leafbio.Cw      =   mly.pCw(i);
             leafbio.Cca     =   mly.pCca(i);
