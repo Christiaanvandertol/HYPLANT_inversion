@@ -107,9 +107,11 @@ diary log_file.txt
 
 I = find(refl(100,:) > 0);
 
+I = I(1:100);
 n = numel(I);
-p = NaN(size(refl,2),18);
+%p = NaN(size(refl,2),18);
 
+%pi = NaN*ones(length(I),18);
 nChunks = 32;
 L = ceil(n/nChunks);
 
@@ -141,13 +143,11 @@ parfor c = 1:nChunks
     end
 end
 
+for c = 1:nChunks
+    p(chunkColumns{c},:) = chunkResults{c};
+end
 
-ps = p(I(1:10000),:);
-save('p_HyPlant_subset4.txt', 'ps','-ascii')
 save('p_HyPlant4.txt', 'p','-ascii')
-
-diary off
-
 
 %%
 x  = load('p_HyPlant4.txt');
